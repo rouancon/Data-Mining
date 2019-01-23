@@ -3,8 +3,8 @@
 #Connor Rouan and Yadukrishnan Sethumadhavan
 
 #-----Problem 1-----
-#--Part a--
-par(mfrow = c(1, 4))
+#--Part a-- DONE
+par(mfrow = c(2, 2))
 plot(forestfires$area ~ forestfires$temp, xlab = "Temperature (C)", ylab = "Area (ha)")
 plot(forestfires$area ~ forestfires$month, xlab = "Month", ylab = "Area (ha)")
 plot(forestfires$area ~ forestfires$DC, xlab = "DC", ylab = "Area (ha)")
@@ -28,7 +28,7 @@ lines(density(forestfires$wind),
       lwd = 2,
       col = "blue")
 
-#--Part e--
+#--Part e-- ggplot
 library(sm)
 attach(mtcars)
 lbl <- factor(cyl, levels= c(4,6,8),
@@ -38,8 +38,13 @@ title(main="MPG Distribution by Car Cylinders")
 colfill<-c(2:(2+length(levels(cyl.f)))) 
 legend(locator(1), levels(cyl.f), fill=colfill)
 
-#--Part f--
+#--Part f-- DONE
 plot(forestfires[, c(9, 3, 7, 6)])
+
+#The following datasets appear to be correlated:
+#DC and temp
+#temp and DMC
+#DC and DMC
 
 #--Part g-- DONE
 par(mfrow = c(1, 3))
@@ -71,4 +76,9 @@ hist(log(forestfires$DMC),
 #The logarithmic distribution of the DMC data fits more of an even distribution rather than the raw DMC data.
 #There is a stronger central distribution of the data that clearly shows a center point and a much smaller
 #-range of total data points along the distribution.
+
+
+#-----Problem 2-----
+#--Part a--
+
 
