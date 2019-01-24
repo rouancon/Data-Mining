@@ -30,8 +30,10 @@ lines(density(forestfires$wind),
 
 #--Part e-- help
 library(ggplot2)
-#df <- forestfires$wind['month'] = forestfires$wind.forestfires$month.round(-1)
-ggplot(forestfires$wind,aes(x='wind speed',colour='Month')) + geom_density()
+plotDensityggplot<-ggplot()+
+  geom_density(data = forestfires, aes(wind, colour=factor(month)))+
+  theme_classic()
+print(plotDensityggplot)
 
 #--Part f-- DONE
 plot(forestfires[, c(9, 3, 7, 6)])

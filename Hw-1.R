@@ -52,7 +52,7 @@ lines(density(forestfires$wind), # density plot
       col = "chocolate3")
 
 #1.e
-
+library(ggplot2)
 plotDensityggplot<-ggplot()+
   geom_density(data = forestfires, aes(wind, colour=factor(month)))+
   theme_classic()
