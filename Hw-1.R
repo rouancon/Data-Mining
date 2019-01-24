@@ -53,11 +53,6 @@ lines(density(forestfires$wind), # density plot
 
 #1.e
 
-library(sm)
-forestfires$month = factor(forestfires$month)
-sm.density.compare(forestfires$wind, forestfires$month, xlab="Wind")
-title(main="Wind Distribution by Month")
-
 plotDensityggplot<-ggplot()+
   geom_density(data = forestfires, aes(wind, colour=factor(month)))+
   theme_classic()
