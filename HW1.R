@@ -12,7 +12,7 @@ plot(forestfires$area ~ forestfires$RH, xlab = "Relative Humidity (%)", ylab = "
 
 #--Part b-- DONE
 par(mfrow = c(1, 1))
-hist(forestfires$wind, xlab = "Wind Speed (km/h)")
+hist(forestfires$wind, xlab = "Wind Speed (km/h)", main="Histogram of Wind Speeds")
 
 #--Part c-- DONE
 library(Hmisc)
@@ -76,8 +76,8 @@ hist(log(forestfires$DMC),
 #-----Problem 2-----
 #--Part a-- Done
 par(mfrow = c(2, 1))
-hist(Twitter$friends_count)
-hist(log(Twitter$friends_count))
+hist(Twitter$friends_count, xlab="Friend Count")
+hist(log(Twitter$friends_count), xlab="log(Friend Count)")
 
 #Looking at the histrogram of the data that shows the distribution of friends_count, there is an extremely
 #-wide range of values which prevents clear visibility into the distribution of the data.
@@ -97,6 +97,7 @@ describe(Twitter$friends_count)
 #-that has -84 friends which is not possible. Otherwise the data is good considering the quantity of entries.
 
 #--Part d-- DONE
+par(mfrow = c(1, 1))
 library(scatterplot3d)
 scatterplot3d(Twitter$created_at_year, 
               Twitter$education, 
