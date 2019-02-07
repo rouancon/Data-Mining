@@ -53,3 +53,39 @@ factor.plot(pc)
 
 #--Task F--
 #See PDF for explanation
+
+#Problem3
+
+#Problem4
+
+#--Task A--
+
+fa.parallel(Harman74.cor$cov)
+#Based on these results, we will need to extract 4 principal component
+
+
+#--Task B--
+
+harmanpc<-fa(Harman74.cor$cov,nfactors=4, rotate='none')
+harmanpc
+
+#--Task C--
+
+harmanrc<-fa(Harman74.cor$cov, nfactors=4, rotate='varimax')
+harmanrc
+
+#--Task D--
+
+harmanpc<-fa(Harman74.cor$cov,nfactors=4, rotate='none', scores=TRUE)
+harmanpc$scores
+
+#--Task E--
+
+factor.plot(harmanpc)
+
+#--Task F--
+
+fa.diagram(harmanpc)
+
+#--Task G--
+#See PDF for explanation
