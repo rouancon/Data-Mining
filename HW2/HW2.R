@@ -76,8 +76,8 @@ harmanrc
 
 #--Task D--
 
-harmanpc<-fa(Harman74.cor$cov,nfactors=4, rotate='none', scores=TRUE)
-harmanpc$scores
+harmanpc<-fa(Harman74.cor$cov,nfactors=4, rotate='none', scores=TRUE, fm='pa')
+harmanpc$weights
 
 #--Task E--
 
