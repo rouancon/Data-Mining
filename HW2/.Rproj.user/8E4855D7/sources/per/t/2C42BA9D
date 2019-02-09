@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1549572440277.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "2C42BA9D",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1549572440277,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "70EB72AD",
+        "caption" : "USJudgeRatings",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3Adatasets&obj=USJudgeRatings&cache_key=70EB72AD",
+        "displayedObservations" : 43,
+        "environment" : "package:datasets",
+        "object" : "USJudgeRatings",
+        "preview" : 0,
+        "totalObservations" : 43,
+        "variables" : 12
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
