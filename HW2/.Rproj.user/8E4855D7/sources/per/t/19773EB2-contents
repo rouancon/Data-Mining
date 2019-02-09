@@ -28,14 +28,13 @@ factor.plot(pc)
 #See PDF for explanation
 
 
-
 #Problem 2
 GID$Class <- NULL
 GID$ID <- NULL
 
 #--Task A--
 library(psych)
-fa.parallel(GID, fa="PC", n.iter=100)
+fa.parallel(GID)
 
 #Based on these results, we will need to extract 4 principal component
 
@@ -56,18 +55,61 @@ factor.plot(pc)
 #--Task F--
 #See PDF for explanation
 
-#Problem 3
-library(PBSadmb)
-herman23 <- readRep(herman23, suffix=c(".cor"), global=FALSE)
 
+#Problem 3
 #--Task A--
+fa.parallel(Harman23.cor$cov)
+#Based on these results, we will need to extract 2 principal component
+
+#--Task B--
+harmanpc<-fa(Harman23.cor$cov,nfactors=2, rotate='none')
+harmanpc
+
+#--Task C--
+harmanrc <- fa(Harman23.cor$cov, nfactors=2, rotate='varimax')
+harmanrc
+
+#--Task D--
+harmanpc<-fa(Harman23.cor$cov, nfactors=2, rotate='none', scores=TRUE, fm='pa')
+harmanpc$weights
+
+#--Task E--
+factor.plot(harmanpc)
+
+#--Task F--
+fa.diagram(harmanpc)
+
+#--Task G--
+#See PDF for explanation
+
 
 
 #Problem 4
-library(PBSadmb)
-herman23 <- readRep(herman23, suffix=c(".cor"), global=FALSE)
-
 #--Task A--
+fa.parallel(Harman74.cor$cov)
+#Based on these results, we will need to extract 4 principal component
+
+
+#--Task B--
+harmanpc<-fa(Harman74.cor$cov,nfactors=4, rotate='none')
+harmanpc
+
+#--Task C--
+harmanrc<-fa(Harman74.cor$cov, nfactors=4, rotate='varimax')
+harmanrc
+
+#--Task D--
+harmanpc<-fa(Harman74.cor$cov,nfactors=4, rotate='none', scores=TRUE, fm='pa')
+harmanpc$weights
+
+#--Task E--
+factor.plot(harmanpc)
+
+#--Task F--
+fa.diagram(harmanpc)
+
+#--Task G--
+#See PDF for explanation
 
 
 #Problem 5
