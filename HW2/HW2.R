@@ -57,6 +57,7 @@ factor.plot(pc)
 #See PDF for explanation
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #Problem 3
 library(PBSadmb)
 herman23 <- readRep(herman23, suffix=c(".cor"), global=FALSE)
@@ -85,6 +86,8 @@ head(results)
 #--Task C--
 factor.plot(results, title="Multi-Dimensional Scaling Results")
 =======
+=======
+>>>>>>> 28dc36cefd93b445b24e36c1b1f4288048e0eb3d
 #Problem3
 
 #Problem4
@@ -120,4 +123,3 @@ fa.diagram(harmanpc)
 
 #--Task G--
 #See PDF for explanation
->>>>>>> 28dc36cefd93b445b24e36c1b1f4288048e0eb3d
