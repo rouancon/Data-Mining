@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "0",
+    "hash" : "1182346703",
     "id" : "D350E44A",
-    "lastKnownWriteTime" : 1550774591,
-    "last_content_update" : 1550774591284,
+    "lastKnownWriteTime" : 1550781641,
+    "last_content_update" : 1550781641556,
     "path" : "~/Documents/GitHub/DataMining-HW1/Data-Mining/HW3/HW3.R",
     "project_path" : null,
     "properties" : {
+        "cursorPosition" : "14,7",
+        "scrollLine" : "0",
         "tempName" : "Untitled1"
     },
     "relative_order" : 1,
