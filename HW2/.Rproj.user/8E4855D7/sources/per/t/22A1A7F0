@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1550950517973.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "22A1A7F0",
+    "lastKnownWriteTime" : 8589869056,
+    "last_content_update" : 1550950517973,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "85C7737D",
+        "caption" : "Forest_Fires_Data",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Forest_Fires_Data&cache_key=85C7737D",
+        "displayedObservations" : "517",
+        "environment" : "",
+        "object" : "Forest_Fires_Data",
+        "preview" : "0",
+        "totalObservations" : "517",
+        "variables" : "13"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
