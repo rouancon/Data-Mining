@@ -36,14 +36,31 @@ summary(model)
 
 #Part C
 #Typical Approach
+#Model 1
 fit <- lm(formula=Compressive_Strength ~ I(Cement^2) + Water + I(Coarse_Aggregate^2) + Fly_Ash, data=concrete)
 par(mfrow=c(2,2))
 plot(fit)
 
+#Model 2
+fit <- lm(formula=Compressive_Strength ~ I(Cement^2) + Water + Coarse_Aggregate + Fly_Ash, data=concrete)
+par(mfrow=c(2,2))
+plot(fit)
+
 #Enhanced Approach
+#Model 1
 library(car)
 par(mfrow=c(1,1))
 fit <- lm(formula=Compressive_Strength ~ I(Cement^2) + Water + I(Coarse_Aggregate^2) + Fly_Ash, data=concrete)
+qqPlot(fit, labels=row.names(concrete), id.method="identify", simulate=TRUE, main="Q-Q Plot")
+
+library(car)
+par(mfrow=c(2,2))
+crPlots(fit)
+
+#Model 2
+library(car)
+par(mfrow=c(1,1))
+fit <- lm(formula=Compressive_Strength ~ I(Cement^2) + Water + Coarse_Aggregate + Fly_Ash, data=concrete)
 qqPlot(fit, labels=row.names(concrete), id.method="identify", simulate=TRUE, main="Q-Q Plot")
 
 library(car)
@@ -65,7 +82,14 @@ model <- lm(formula=Area ~., data=fires)
 summary(model)
 
 #Part B
-model <- lm(formula=Area ~ Rain + FFMC + DC, data=fires)
+model <- lm(formula=Area ~ X + DMC + ISI + Temp + RH + Wind, data=fires)
+model[["model"]][["Area"]] <- log(model[["model"]][["Area"]])
+summary(model)
+
+model <- lm(formula=Area ~ X + DMC + ISI + Temp + RH + Wind, data=fires)
+summary(model)
+
+model <- lm(formula=Area ~ log(X + DMC + ISI + Temp + RH + Wind), data=fires)
 summary(model)
 
 model <- lm(formula=Area ~ I(Rain^2) + FFMC + DC, data=fires)
