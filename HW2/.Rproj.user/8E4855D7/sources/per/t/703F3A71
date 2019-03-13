@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1552486894462.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1568385723",
+    "id" : "703F3A71",
+    "lastKnownWriteTime" : 1552493078,
+    "last_content_update" : 1552493078269,
+    "path" : "~/Documents/GitHub/DataMining-HW1/Data-Mining/HW4/HW4.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "30,0",
+        "scrollLine" : "12"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
