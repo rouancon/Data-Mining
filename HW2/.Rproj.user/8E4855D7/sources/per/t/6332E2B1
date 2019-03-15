@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1552681742229.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6332E2B1",
+    "lastKnownWriteTime" : 4505375944,
+    "last_content_update" : 1552681742229,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "BB675276",
+        "caption" : "Accidents",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=Accidents&cache_key=BB675276",
+        "displayedObservations" : "42183",
+        "environment" : "",
+        "object" : "Accidents",
+        "preview" : "0",
+        "totalObservations" : "42183",
+        "variables" : "24"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

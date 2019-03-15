@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1552682791619.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "53A52ADE",
+    "lastKnownWriteTime" : 6,
+    "last_content_update" : 1552682791619,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "E5AA8C14",
+        "caption" : "INJURY",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=INJURY&cache_key=E5AA8C14",
+        "displayedObservations" : "42183",
+        "environment" : "",
+        "object" : "INJURY",
+        "preview" : "0",
+        "totalObservations" : "42183",
+        "variables" : "1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
