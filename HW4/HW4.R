@@ -259,12 +259,12 @@ library(gmodels)
 CrossTable(x=cl_train, y=model)
 
 #Problem 3
-INJURY <- data.frame()
-for(i in nrow(Accidents)) {
+Accidents$INJURY <- 0
+for(i in 1:nrow(Accidents)) {
   if(Accidents[i,]$MAX_SEV_IR == 0) {
-    INJURY[i,1] <- 0
+    Accidents[i,]$INJURY = 0
   }
   else {
-    INJURY[i,1] <- 1
+    Accidents[i,]$INJURY = 1
   }
 }
