@@ -268,3 +268,13 @@ for(i in 1:nrow(Accidents)) {
     Accidents[i,]$INJURY = 1
   }
 }
+
+#Problem A
+library(e1071)
+response <- Accidents$INJURY
+data <- Accidents
+data$INJURY <- NULL
+data$MAX_SEV_IR <- NULL
+model <- naiveBayes(response~., data)
+result <- predict(model, data, type="class")
+View(result)
