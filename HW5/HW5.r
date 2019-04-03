@@ -4,7 +4,7 @@
 #Problem 1
 #Part A (pre-processing)
 library(readxl)
-toyota <- read_excel("ToyotaCorolla.xlsx", sheet = "data")
+toyota <- read_excel("Documents/GitHub/DataMining-HW1/Data-Mining/HW5/ToyotaCorolla.xlsx", sheet = "data")
 View(toyota)
 
 #converting Fule_Type to categorical variable
@@ -39,13 +39,12 @@ test_toyota<-toyota_n[1149:1436,]
 #Part A, i
 #build the model
 library(rpart)
-model <- rpart(price~Age_08_04+KM+Fuel_Type+HP+Automatic+Doors+Quarterly_Tax+Mfg_Guarantee+Guarantee_Period+Airco+Automatic_Airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, method=anova)
+model <- rpart(Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, method="anova")
 printcp(model)
 #refine the model
-opt_model <- prune(model, cp=)
+opt_model <- prune(model, cp=.01)
 #results of the model
 rsq.rpart(opt_model)
-print(opt_model)
 plot(opt_model)
 text(opt_model)
 
@@ -60,19 +59,17 @@ rmse(actual = train_toyota$price, predicted = pred)
 #predict the validation data sets
 pred <- predict(opt_model, newdata=val_toyota, type = c("vector"))
 #Examine results
-library(Metrics)
 rmse(actual = val_toyota$price, predicted = pred)
 
 #prediction data set
-pred <- predict(opt_model, newdata=predict_toyota, type = c("vector"))
+pred <- predict(opt_model, newdata=test_toyota, type = c("vector"))
 #Examine results
-library(Metrics)
-rmse(actual = predict_toyota$price, predicted = pred)
+rmse(actual = test_toyota$price, predicted = pred)
 
 
 #Part A, iii
 #predict the validation data sets on non-pruned model
 pred <- predict(model, newdata=, type = c("vector"))
 #Examine results
-library(Metrics)
 rmse(actual = val_toyota$price, predicted = pred)
+
