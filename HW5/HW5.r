@@ -27,9 +27,9 @@ dmy <- dummyVars("~.", data = toyota,fullRank = F)
 toyota_d <- data.frame(predict(dmy, newdata = toyota))
 
 #splitting
-train_toyota<- toyota[1:718,]
-val_toyota<- toyota[719:1149,]
-test_toyota<-toyota[1149:1436,]
+train_toyota<- toyota_d[1:718,]
+val_toyota<- toyota_d[719:1149,]
+test_toyota<-toyota_d[1149:1436,]
 
 
 #Part A, i
@@ -47,20 +47,24 @@ text(opt_model)
 
 #Part A, ii
 #predict the training data sets
-train-predict <- train_toyota
-train-predict$Price <- NULL
-pred <- predict(opt_model, newdata=train_toyota, type = "vector")
+train_predict <- train_toyota
+train_predict$Price <- NULL
+pred <- predict(opt_model, newdata=train_predict, type = "vector")
 #Examine results
 library(Metrics)
 rmse(actual = train_toyota$price, predicted = pred)
 
 #predict the validation data sets
-pred <- predict(opt_model, newdata=val_toyota, type = "vector")
+val_predict <- val_toyota
+val_predict$Price <- NULL
+pred <- predict(opt_model, newdata=val_predict, type = "vector")
 #Examine results
 rmse(actual = val_toyota$price, predicted = pred)
 
 #prediction data set
-pred <- predict(opt_model, newdata=test_toyota, type = "vector")
+test_predict <- test_toyota
+test_predict$Price <- NULL
+pred <- predict(opt_model, newdata=test_predict, type = "vector")
 #Examine results
 rmse(actual = test_toyota$price, predicted = pred)
 
