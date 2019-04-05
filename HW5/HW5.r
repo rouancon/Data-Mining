@@ -97,6 +97,14 @@ boxData<-data.frame("pred" = pred, "act" = train_toyota$Price)
 boxplot(act~unlist(pred),data=boxData, main="Non-Pruned Training Error", xlab="Predicted Price", ylab="Actual Price")
 
 #Part B
+
+library(readxl)
+toyota <- read_excel("ToyotaCorolla.xlsx", sheet = "data")
+
+toyota<- toyota[c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax","Mfr_Guarantee",
+                  "Guarantee_Period","Airco","Automatic_airco","CD_Player","Powered_Windows","Sport_Model",
+                  "Tow_Bar")]
+
 #splitting price into 20 bins of equal counts
 toyota<-cbind(new_price=0, toyota)
 toyota$new_price<-cut(toyota$Price, 20, labels=FALSE)
