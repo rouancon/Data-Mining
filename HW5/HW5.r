@@ -34,13 +34,14 @@ test_toyota<-toyota_d[1149:1436,]
 #Part A, i
 #build the model
 library(rpart)
+library(rpart.plot)
 model <- rpart(Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, control = rpart.control(maxdepth = 8), method="anova")
 printcp(model)
 #refine the model
 opt_model <- prune(model, cp=.01)
 #results of the model
 rsq.rpart(opt_model)
-plot(opt_model)
+rpart.plot(opt_model)
 text(opt_model)
 
 
@@ -48,31 +49,31 @@ text(opt_model)
 #predict the training data sets
 train_predict <- train_toyota
 train_predict$Price <- NULL
-pred <- predict(opt_model, newdata=train_predict, type = "vector")
+pred <- predict(object = opt_model, newdata=train_predict, type = "vector")
 #Examine results
-library(Metrics)
-rmse(actual = train_toyota$price, predicted = pred)
+library(ModelMetrics)
+rmse(train_toyota$Price, pred)
 
 #predict the validation data sets
 val_predict <- val_toyota
 val_predict$Price <- NULL
 pred <- predict(opt_model, newdata=val_predict, type = "vector")
 #Examine results
-rmse(actual = val_toyota$price, predicted = pred)
+rmse(actual = val_toyota$Price, predicted = pred)
 
 #prediction data set
 test_predict <- test_toyota
 test_predict$Price <- NULL
 pred <- predict(opt_model, newdata=test_predict, type = "vector")
 #Examine results
-rmse(actual = test_toyota$price, predicted = pred)
+rmse(sim = test_toyota$Price, predicted = pred)
 
 
 #Part A, iii
 #predict the validation data sets on non-pruned model
 pred <- predict(model, newdata=, type = "vector")
 #Examine results
-rmse(actual = val_toyota$price, predicted = pred)
+rmse(actual = val_toyota$Price, predicted = pred)
 
 
 #-- Problem 2 --
