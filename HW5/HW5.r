@@ -150,8 +150,8 @@ View(banks)
 str(banks)
 banks$"Financial Condition"<-factor(banks$"Financial Condition")
 X1<-banks$"Financial Condition"
-X2<-banks$`TotExp/Assets`
-X3<-banks$`TotLns&Lses/Assets`
+X2<-banks$`TotExp.Assets`
+X3<-banks$`TotLns.Lses.Assets`
 
 #logit as a function
 fit.full <- glm(X1 ~ X2+X3,data=banks,family=binomial())
@@ -164,7 +164,7 @@ summary(fit.full)
 #compare the fit
 anova(fit.reduced, fit.full, test="Chisq")
 
-#Part A
+#Part unknown
 coef(fit.full)
 exp(coef(fit.full))
 
