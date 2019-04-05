@@ -140,12 +140,11 @@ pred_data<-data.frame("Age_08_04"= 77,"KM"=117000, "Fuel_Type.1"=0,"Fuel_Type.2"
                       "Guarantee_Period"= 3,"Airco"= 1,"Automatic_airco"= 0,"CD_Player"=0 ,
                       "Powered_Windows"= 0,"Sport_Model"=0 ,"Tow_Bar"=1)
 
-rt_pred <- predict(object = rt_model, newdata=pred_data, type = "vector")
+rt_pred <- predict(object = opt_rt_model, newdata=pred_data, type = "vector")
 ct_pred <- predict(object = ct_model, newdata=pred_data, type = "prob")
 
 
 #-- Problem 2 --
-
 banks <- read_excel("Banks.xlsx")
 View(banks)
 str(banks)
@@ -157,4 +156,22 @@ X3<-banks$`TotLns&Lses/Assets`
 #logit as a function
 fit.full <- glm(X1 ~ X2+X3,data=banks,family=binomial())
 summary(fit.full)
+
+#reduced fit model
+fit.reduced <- glm(X1 ~ X2,data=banks,family=binomial())
+summary(fit.full)
+
+#compare the fit
+anova(fit.reduced, fit.full, test="Chisq")
+
+#Part A
+coef(fit.full)
+exp(coef(fit.full))
+
+testData <- data.frame(X2,X3)
+testData$prob <- predict(fit.full, newdata=testData, type="response")
+testData$real <- X1
+testData
+
+#Part B
 
