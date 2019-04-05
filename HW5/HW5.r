@@ -96,6 +96,20 @@ names(pred)[1] <- "predPrice"
 boxData<-data.frame("pred" = pred, "act" = train_toyota$Price)
 boxplot(act~unlist(pred),data=boxData, main="Non-Pruned Training Error", xlab="Predicted Price", ylab="Actual Price")
 
+#Part B
+#splitting price into 20 bins of equal counts
+toyota<-cbind(new_price=0, toyota)
+toyota$new_price<-cut(toyota$Price, 20, labels=FALSE)
+View(toyota)
+
+toyota$Price <- NULL
+
+train_toyota<- toyota_d[1:718,]
+val_toyota<- toyota_d[719:1149,]
+test_toyota<-toyota_d[1149:1436,]
+
+model <- rpart(new_price~., data=train_toyota, method="class")
+rpart.plot(model)
 
 #-- Problem 2 --
 
