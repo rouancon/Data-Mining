@@ -135,6 +135,11 @@ rpart.plot(ct_model)
 
 #Part B, ii
 
+pred_data<-data.frame("Age_08_04"= 77,"KM"=117000, "Fuel_Type.1"=0,"Fuel_Type.2"=0,"Fuel_Type.3"=1 ,
+                      "HP"=110 ,"Automatic"= 0 ,"Doors"= 5,"Quarterly_Tax"= 100 ,"Mfr_Guarantee"=0 ,
+                      "Guarantee_Period"= 3,"Airco"= 1,"Automatic_airco"= 0,"CD_Player"=0 ,
+                      "Powered_Windows"= 0,"Sport_Model"=0 ,"Tow_Bar"=1)
+
 rt_pred <- predict(object = rt_model, newdata=pred_data, type = "vector")
 ct_pred <- predict(object = ct_model, newdata=pred_data, type = "prob")
 
