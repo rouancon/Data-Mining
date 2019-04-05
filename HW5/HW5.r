@@ -175,3 +175,5 @@ testData
 
 #Part B
 
+new_bank<-data.frame("TotExp/Assets"=0.11, "TotLns&Lses/Assets"=0.6)
+#View(new_bank)
