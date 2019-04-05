@@ -112,9 +112,9 @@ View(toyota)
 
 toyota$Price <- NULL
 
-train_toyota<- toyota_d[1:718,]
-val_toyota<- toyota_d[719:1149,]
-test_toyota<-toyota_d[1149:1436,]
+train_toyota<- toyota[1:718,]
+val_toyota<- toyota[719:1149,]
+test_toyota<-toyota[1149:1436,]
 
 model <- rpart(new_price~., data=train_toyota, method="class")
 rpart.plot(model)
