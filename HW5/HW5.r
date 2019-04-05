@@ -35,25 +35,25 @@ test_toyota<-toyota_d[1149:1436,]
 #build the model
 library(rpart)
 library(rpart.plot)
-model <- rpart(Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, control = rpart.control(maxdepth = 8), method="anova")
-printcp(model)
+rt_model <- rpart(Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, control = rpart.control(maxdepth = 8), method="anova")
+printcp(rt_model)
 #refine the model
-opt_model <- prune(model, cp=.01)
+opt_rt_model <- prune(rt_model, cp=.01)
 #results of the model
-rsq.rpart(opt_model)
-rpart.plot(opt_model)
-text(opt_model)
+rsq.rpart(opt_rt_model)
+rpart.plot(opt_rt_model)
+text(opt_rt_model)
 
 
 #Part A, ii
 #predict the TRAINING data sets
 train_predict <- train_toyota
 train_predict$Price <- NULL
-pred <- predict(object = opt_model, newdata=train_predict, type = "vector")
+pred <- predict(object = opt_rt_model, newdata=train_predict, type = "vector")
 #Examine results
 library(ModelMetrics)
 rmse(train_toyota$Price, pred)
-pred <- as.data.frame(predict(object = opt_model, newdata=train_predict, type = "vector"))
+pred <- as.data.frame(predict(object = opt_rt_model, newdata=train_predict, type = "vector"))
 names(pred)[1] <- "predPrice"
 boxData<-data.frame("pred" = pred, "act" = train_toyota$Price)
 boxplot(act~unlist(pred),data=boxData, main="Training Error", xlab="Predicted Price", ylab="Actual Price")
@@ -61,11 +61,11 @@ boxplot(act~unlist(pred),data=boxData, main="Training Error", xlab="Predicted Pr
 #predict the VALIDATION data sets
 val_predict <- val_toyota
 val_predict$Price <- NULL
-pred <- predict(object = opt_model, newdata=val_predict, type = "vector")
+pred <- predict(object = opt_rt_model, newdata=val_predict, type = "vector")
 #Examine results
 library(ModelMetrics)
 rmse(val_toyota$Price, pred)
-pred <- as.data.frame(predict(object = opt_model, newdata=val_predict, type = "vector"))
+pred <- as.data.frame(predict(object = opt_rt_model, newdata=val_predict, type = "vector"))
 names(pred)[1] <- "predPrice"
 boxData<-data.frame("pred" = pred, "act" = val_toyota$Price)
 boxplot(act~unlist(pred),data=boxData, main="Validation Error", xlab="Predicted Price", ylab="Actual Price")
@@ -73,11 +73,11 @@ boxplot(act~unlist(pred),data=boxData, main="Validation Error", xlab="Predicted 
 #predict TEST data set
 test_predict <- test_toyota
 test_predict$Price <- NULL
-pred <- predict(opt_model, newdata=test_predict, type = "vector")
+pred <- predict(opt_rt_model, newdata=test_predict, type = "vector")
 #Examine results
 library(ModelMetrics)
 rmse(test_toyota$Price, pred)
-pred <- as.data.frame(predict(opt_model, newdata=test_predict, type = "vector"))
+pred <- as.data.frame(predict(opt_rt_model, newdata=test_predict, type = "vector"))
 names(pred)[1] <- "predPrice"
 boxData<-data.frame("pred" = pred, "act" = test_toyota$Price)
 boxplot(act~unlist(pred),data=boxData, main="Test Prediction Error", xlab="Predicted Price", ylab="Actual Price")
@@ -87,16 +87,16 @@ boxplot(act~unlist(pred),data=boxData, main="Test Prediction Error", xlab="Predi
 #predict the TRAINING data sets with NON-pruned model
 train_predict <- train_toyota
 train_predict$Price <- NULL
-pred <- predict(object = model, newdata=train_predict, type = "vector")
+pred <- predict(object = rt_model, newdata=train_predict, type = "vector")
 #Examine results
 library(ModelMetrics)
 rmse(train_toyota$Price, pred)
-pred <- as.data.frame(predict(object = model, newdata=train_predict, type = "vector"))
+pred <- as.data.frame(predict(object = rt_model, newdata=train_predict, type = "vector"))
 names(pred)[1] <- "predPrice"
 boxData<-data.frame("pred" = pred, "act" = train_toyota$Price)
 boxplot(act~unlist(pred),data=boxData, main="Non-Pruned Training Error", xlab="Predicted Price", ylab="Actual Price")
 
-#Part B
+#Part B, i
 
 library(readxl)
 toyota <- read_excel("ToyotaCorolla.xlsx", sheet = "data")
@@ -128,9 +128,16 @@ val_toyota<- toyota_d[719:1149,]
 test_toyota<-toyota_d[1149:1436,]
 #View(train_toyota)
 
-model <- rpart(new_price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, control = rpart.control(maxdepth = 8), method="class")
+ct_model <- rpart(new_price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, control = rpart.control(maxdepth = 8), method="class")
 
-rpart.plot(model)
+rpart.plot(ct_model)
+
+
+#Part B, ii
+
+rt_pred <- predict(object = rt_model, newdata=pred_data, type = "vector")
+ct_pred <- predict(object = ct_model, newdata=pred_data, type = "prob")
+
 
 #-- Problem 2 --
 
