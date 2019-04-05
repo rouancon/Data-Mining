@@ -4,8 +4,7 @@
 #-- Problem 1 --
 #Part A (pre-processing)
 library(readxl)
-toyota <- read_excel("Documents/GitHub/DataMining-HW1/Data-Mining/HW5/ToyotaCorolla.xlsx", sheet = "data")
-View(toyota)
+toyota <- read_excel("ToyotaCorolla.xlsx", sheet = "data")
 
 #converting Fule_Type to categorical variable
 toyota$Fuel_Type <- factor(toyota$Fuel_Type)
@@ -35,7 +34,7 @@ test_toyota<-toyota_d[1149:1436,]
 #Part A, i
 #build the model
 library(rpart)
-model <- rpart(Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, method="anova")
+model <- rpart(Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, control = rpart.control(maxdepth = 8), method="anova")
 printcp(model)
 #refine the model
 opt_model <- prune(model, cp=.01)
