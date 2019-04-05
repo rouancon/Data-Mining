@@ -77,3 +77,16 @@ rmse(actual = val_toyota$Price, predicted = pred)
 
 
 #-- Problem 2 --
+
+banks <- read_excel("Banks.xlsx")
+View(banks)
+str(banks)
+banks$"Financial Condition"<-factor(banks$"Financial Condition")
+X1<-banks$"Financial Condition"
+X2<-banks$`TotExp/Assets`
+X3<-banks$`TotLns&Lses/Assets`
+
+#logit as a function
+fit.full <- glm(X1 ~ X2+X3,data=banks,family=binomial())
+summary(fit.full)
+
