@@ -46,34 +46,55 @@ text(opt_model)
 
 
 #Part A, ii
-#predict the training data sets
+#predict the TRAINING data sets
 train_predict <- train_toyota
 train_predict$Price <- NULL
 pred <- predict(object = opt_model, newdata=train_predict, type = "vector")
 #Examine results
 library(ModelMetrics)
 rmse(train_toyota$Price, pred)
+pred <- as.data.frame(predict(object = opt_model, newdata=train_predict, type = "vector"))
+names(pred)[1] <- "predPrice"
+boxData<-data.frame("pred" = pred, "act" = train_toyota$Price)
+boxplot(act~unlist(pred),data=boxData, main="Training Error", xlab="Predicted Price", ylab="Actual Price")
 
-#predict the validation data sets
+#predict the VALIDATION data sets
 val_predict <- val_toyota
 val_predict$Price <- NULL
-pred <- predict(opt_model, newdata=val_predict, type = "vector")
+pred <- predict(object = opt_model, newdata=val_predict, type = "vector")
 #Examine results
-rmse(actual = val_toyota$Price, predicted = pred)
+library(ModelMetrics)
+rmse(val_toyota$Price, pred)
+pred <- as.data.frame(predict(object = opt_model, newdata=val_predict, type = "vector"))
+names(pred)[1] <- "predPrice"
+boxData<-data.frame("pred" = pred, "act" = val_toyota$Price)
+boxplot(act~unlist(pred),data=boxData, main="Validation Error", xlab="Predicted Price", ylab="Actual Price")
 
-#prediction data set
+#predict TEST data set
 test_predict <- test_toyota
 test_predict$Price <- NULL
 pred <- predict(opt_model, newdata=test_predict, type = "vector")
 #Examine results
-rmse(sim = test_toyota$Price, predicted = pred)
+library(ModelMetrics)
+rmse(test_toyota$Price, pred)
+pred <- as.data.frame(predict(opt_model, newdata=test_predict, type = "vector"))
+names(pred)[1] <- "predPrice"
+boxData<-data.frame("pred" = pred, "act" = test_toyota$Price)
+boxplot(act~unlist(pred),data=boxData, main="Test Prediction Error", xlab="Predicted Price", ylab="Actual Price")
 
 
 #Part A, iii
-#predict the validation data sets on non-pruned model
-pred <- predict(model, newdata=, type = "vector")
+#predict the TRAINING data sets with NON-pruned model
+train_predict <- train_toyota
+train_predict$Price <- NULL
+pred <- predict(object = model, newdata=train_predict, type = "vector")
 #Examine results
-rmse(actual = val_toyota$Price, predicted = pred)
+library(ModelMetrics)
+rmse(train_toyota$Price, pred)
+pred <- as.data.frame(predict(object = model, newdata=train_predict, type = "vector"))
+names(pred)[1] <- "predPrice"
+boxData<-data.frame("pred" = pred, "act" = train_toyota$Price)
+boxplot(act~unlist(pred),data=boxData, main="Non-Pruned Training Error", xlab="Predicted Price", ylab="Actual Price")
 
 
 #-- Problem 2 --
