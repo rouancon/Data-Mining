@@ -101,22 +101,35 @@ boxplot(act~unlist(pred),data=boxData, main="Non-Pruned Training Error", xlab="P
 library(readxl)
 toyota <- read_excel("ToyotaCorolla.xlsx", sheet = "data")
 
+
 toyota<- toyota[c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax","Mfr_Guarantee",
                   "Guarantee_Period","Airco","Automatic_airco","CD_Player","Powered_Windows","Sport_Model",
                   "Tow_Bar")]
 
+#converting Fule_Type to categorical variable
+toyota$Fuel_Type <- factor(toyota$Fuel_Type)
+toyota$Fuel_Type <- as.numeric(toyota$Fuel_Type)
+toyota$Fuel_Type <- factor(toyota$Fuel_Type)
+
+#converting to dummy variable
+library(caret)
+dmy <- dummyVars("~.", data = toyota,fullRank = F)
+toyota_d <- data.frame(predict(dmy, newdata = toyota))
+
 #splitting price into 20 bins of equal counts
-toyota<-cbind(new_price=0, toyota)
-toyota$new_price<-cut(toyota$Price, 20, labels=FALSE)
-View(toyota)
+toyota_d<-cbind(new_price=0, toyota_d)
+toyota_d$new_price<-cut(toyota_d$Price, 20, labels=FALSE)
+#View(toyota)
 
-toyota$Price <- NULL
+toyota_d$Price <- NULL
 
-train_toyota<- toyota[1:718,]
-val_toyota<- toyota[719:1149,]
-test_toyota<-toyota[1149:1436,]
+train_toyota<- toyota_d[1:718,]
+val_toyota<- toyota_d[719:1149,]
+test_toyota<-toyota_d[1149:1436,]
+#View(train_toyota)
 
-model <- rpart(new_price~., data=train_toyota, method="class")
+model <- rpart(new_price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, data=train_toyota, control = rpart.control(maxdepth = 8), method="class")
+
 rpart.plot(model)
 
 #-- Problem 2 --
