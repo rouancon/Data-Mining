@@ -174,6 +174,95 @@ testData$real <- X1
 testData
 
 #Part B
+new_bank<-data.frame("X2"=0.11, "X3"=0.6)
 
-new_bank<-data.frame("TotExp/Assets"=0.11, "TotLns&Lses/Assets"=0.6)
-#View(new_bank)
+new_bank$prob <- predict(fit.full, newdata=new_bank, type="response")
+new_bank
+coef(fit.full)
+exp(coef(fit.full))
+
+#-- Problem 3 --
+#Part A
+
+
+#Part B
+admins <- read_excel("sys_adminis.xlsx")
+admins$`Completed task` <- ifelse(admins$`Completed task`=="Yes", 1, 0)
+
+#logit as a function
+fit.full <- glm(`Completed task` ~ Experience+Training, data=admins, family=binomial())
+summary(fit.full)
+
+#use the model to predict
+testData <- data.frame("Experience" = admins$Experience, "Training" = admins$Training)
+testData$pred <- predict(fit.full, newdata=testData, type="response")
+testData$act <- admins$`Completed task`
+#intrepret classification probabilities
+testData$pred <- ifelse(testData$pred > 0.5, 1, 0)
+count = 0
+total = 0
+for (row in 1:nrow(testData)) {
+  pred <- testData[row, "pred"]
+  act  <- testData[row, "act"]
+  
+  if(pred == 0 && act == 1) {count=count+1}
+  if(act == 1) {total=total+1}
+}
+percentage = count/total
+percentage
+
+#Part C
+admins <- read_excel("sys_adminis.xlsx")
+admins$`Completed task` <- ifelse(admins$`Completed task`=="Yes", 1, 0)
+
+#logit as a function
+fit.full <- glm(`Completed task` ~ Experience+Training, data=admins, family=binomial())
+summary(fit.full)
+
+#use the model to predict
+testData <- data.frame("Experience" = admins$Experience, "Training" = admins$Training)
+testData$pred <- predict(fit.full, newdata=testData, type="response")
+testData$act <- admins$`Completed task`
+#intrepret classification probabilities
+testData$pred <- ifelse(testData$pred > 0.3, 1, 0)
+count = 0
+total = 0
+for (row in 1:nrow(testData)) {
+  pred <- testData[row, "pred"]
+  act  <- testData[row, "act"]
+  
+  if(pred == 0 && act == 1) {count=count+1}
+  if(act == 1) {total=total+1}
+}
+percentage = count/total
+percentage
+
+#Part D
+admins <- read_excel("sys_adminis.xlsx")
+admins$`Completed task` <- ifelse(admins$`Completed task`=="Yes", 1, 0)
+
+#logit as a function
+fit.full <- glm(`Completed task` ~ Experience+Training, data=admins, family=binomial())
+summary(fit.full)
+
+#use the model to predict
+testData <- data.frame("Experience" = admins$Experience, "Training" = admins$Training)
+testData$pred <- predict(fit.full, newdata=testData, type="response")
+testData$act <- admins$`Completed task`
+#intrepret classification probabilities
+testData$pred <- ifelse(testData$pred > 0.5, 1, 0)
+min_exp = 100000000
+count = 0
+total_exp = 0
+for (row in 1:nrow(testData)) {
+  train <- testData[row, "Training"]
+  exp <- testData[row, "Experience"]
+  pred  <- testData[row, "pred"]
+  
+  if(pred == 1 && train == 4) {count=count+1
+                                total_exp=total_exp+exp}
+  if(pred == 1 && train == 4 && exp < min_exp) {min_exp=exp}
+}
+avg <- total_exp/count
+avg
+min_exp
