@@ -21,9 +21,15 @@ library(caret)
 dmy <- dummyVars("~.", data = toyota,fullRank = F)
 toyota_d <- data.frame(predict(dmy, newdata = toyota))
 
+#normalizing the data
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x))) }
+toyota_n <- as.data.frame(lapply(toyota_d, normalize))
+View(toyota_n)
+
 #splitting
-train_toyota<- toyota_d[1:1077,]
-val_toyota<- toyota_d[1077:1436,]
+train_toyota<- toyota_n[1:1077,]
+val_toyota<- toyota_n[1077:1436,]
 
 #Build NN
 library(neuralnet)
@@ -31,7 +37,7 @@ model <- neuralnet(
   formula = Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, 
   train_toyota,
   hidden = 1,
-  threshold = 0.01,
+  threshold = .001,
   stepmax = 1e+05, 
   rep = 1, 
   startweights = NULL,
@@ -48,11 +54,26 @@ model <- neuralnet(
   constant.weights = NULL,
   likelihood = FALSE)
 
-#prediction
-result <- prediction(model, list.glm = train_toyota$Price)
-
 #Part A
-#threshold values, 1, 0.1, 0.05, 0.01, 0.005, 0.001, and 0.0001
+#for threshold values, 1, 0.1, 0.05, 0.01, 0.005, 0.001, and 0.0001 on training data
+#prediction
+pred_toyota <- train_toyota
+pred_toyota$Price <- NULL
+result <- compute(model, pred_toyota)
+
+#error evaluation
 library(ModelMetrics)
-rmse(train_toyota$Price, result)
-rmse
+rmse(train_toyota$Price, result$net.result)
+data.frame(actual = train_toyota$Price, prediction = result$net.result)
+
+#Part B
+#for threshold values, 1, 0.1, 0.05, 0.01, 0.005, 0.001, and 0.0001 on prediction data
+#prediction
+pred_toyota <- val_toyota
+pred_toyota$Price <- NULL
+result <- compute(model, pred_toyota)
+
+#error evaluation
+library(ModelMetrics)
+rmse(train_toyota$Price, result$net.result)
+data.frame(actual = train_toyota$Price, prediction = result$net.result)
