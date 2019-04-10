@@ -3,7 +3,6 @@
 
 #--Problem 1--
 #Part A
-
 library(readxl)
 toyota <- read_excel("Documents/GitHub/DataMining-HW1/Data-Mining/HW6/ToyotaCorolla.xlsx")
 
@@ -37,8 +36,8 @@ model <- neuralnet(
   formula = Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, 
   train_toyota,
   hidden = 1,
-  threshold = .01,
-  stepmax = 1e+05, 
+  threshold = 0.005,
+  stepmax = 1e+06, 
   rep = 1, 
   startweights = NULL,
   learningrate.limit = NULL,
@@ -82,6 +81,15 @@ pred_toyota <- val_toyota
 pred_toyota$Price <- NULL
 result <- compute(model, pred_toyota)
 
+#denormalize predictions
+minvec <- min(toyota_d$Price)
+maxvec <- max(toyota_d$Price)
+denormalize <- function(x,minval,maxval) {
+  x*(maxval-minval) + minval
+}
+actual <- t(as.data.frame(Map(denormalize,val_toyota$Price,minvec,maxvec)))
+pred <- t(as.data.frame(Map(denormalize,result$net.result,minvec,maxvec)))
+
 #error evaluation
 library(ModelMetrics)
-rmse(val_toyota$Price, result$net.result)
+rmse(actual = actual, prediction = pred)
