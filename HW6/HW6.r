@@ -7,23 +7,32 @@
 library(readxl)
 toyota <- read_excel("Documents/GitHub/DataMining-HW1/Data-Mining/HW6/ToyotaCorolla.xlsx")
 
+toyota<- toyota[c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors",
+                  "Quarterly_Tax","Mfr_Guarantee","Guarantee_Period","Airco",
+                  "Automatic_airco","CD_Player","Powered_Windows","Sport_Model",
+                  "Tow_Bar")]
+
 #converting Fule_Type to categorical variable
 toyota$Fuel_Type <- factor(toyota$Fuel_Type)
 toyota$Fuel_Type <- as.numeric(toyota$Fuel_Type)
 toyota$Fuel_Type <- factor(toyota$Fuel_Type)
 
-toyota<- toyota[c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax","Mfr_Guarantee",
-                  "Guarantee_Period","Airco","Automatic_airco","CD_Player","Powered_Windows","Sport_Model",
-                  "Tow_Bar")]
+
 
 #converting to dummy variable
 library(caret)
 dmy <- dummyVars("~.", data = toyota,fullRank = F)
 toyota_d <- data.frame(predict(dmy, newdata = toyota))
 
+#normalizing the data
+normalize <- function(x) {
+  return ((x - min(x)) / (max(x) - min(x))) }
+toyota_n <- as.data.frame(lapply(toyota_d, normalize))
+View(toyota_n)
+
 #splitting
-train_toyota<- toyota_d[1:1077,]
-val_toyota<- toyota_d[1077:1436,]
+train_toyota<- toyota_n[1:1077,]
+val_toyota<- toyota_n[1077:1436,]
 
 #Build NN
 library(neuralnet)
