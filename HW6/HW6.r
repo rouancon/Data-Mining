@@ -7,14 +7,17 @@
 library(readxl)
 toyota <- read_excel("Documents/GitHub/DataMining-HW1/Data-Mining/HW6/ToyotaCorolla.xlsx")
 
+toyota<- toyota[c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors",
+                  "Quarterly_Tax","Mfr_Guarantee","Guarantee_Period","Airco",
+                  "Automatic_airco","CD_Player","Powered_Windows","Sport_Model",
+                  "Tow_Bar")]
+
 #converting Fule_Type to categorical variable
 toyota$Fuel_Type <- factor(toyota$Fuel_Type)
 toyota$Fuel_Type <- as.numeric(toyota$Fuel_Type)
 toyota$Fuel_Type <- factor(toyota$Fuel_Type)
 
-toyota<- toyota[c("Price","Age_08_04","KM","Fuel_Type","HP","Automatic","Doors","Quarterly_Tax","Mfr_Guarantee",
-                  "Guarantee_Period","Airco","Automatic_airco","CD_Player","Powered_Windows","Sport_Model",
-                  "Tow_Bar")]
+
 
 #converting to dummy variable
 library(caret)
@@ -75,5 +78,10 @@ result <- compute(model, pred_toyota)
 
 #error evaluation
 library(ModelMetrics)
+<<<<<<< HEAD
 rmse(train_toyota$Price, result$net.result)
 data.frame(actual = train_toyota$Price, prediction = result$net.result)
+=======
+rmse(train_toyota$Price, result)
+rmse
+>>>>>>> ef183bf3b74fd03b41f68bf977f722175c31d976
