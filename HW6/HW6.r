@@ -17,8 +17,6 @@ toyota$Fuel_Type <- factor(toyota$Fuel_Type)
 toyota$Fuel_Type <- as.numeric(toyota$Fuel_Type)
 toyota$Fuel_Type <- factor(toyota$Fuel_Type)
 
-
-
 #converting to dummy variable
 library(caret)
 dmy <- dummyVars("~.", data = toyota,fullRank = F)
@@ -28,7 +26,6 @@ toyota_d <- data.frame(predict(dmy, newdata = toyota))
 normalize <- function(x) {
   return ((x - min(x)) / (max(x) - min(x))) }
 toyota_n <- as.data.frame(lapply(toyota_d, normalize))
-View(toyota_n)
 
 #splitting
 train_toyota<- toyota_n[1:1077,]
@@ -40,7 +37,7 @@ model <- neuralnet(
   formula = Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, 
   train_toyota,
   hidden = 1,
-  threshold = .001,
+  threshold = .01,
   stepmax = 1e+05, 
   rep = 1, 
   startweights = NULL,
@@ -64,10 +61,19 @@ pred_toyota <- train_toyota
 pred_toyota$Price <- NULL
 result <- compute(model, pred_toyota)
 
+#denormalize predictions
+minvec <- min(toyota_d$Price)
+maxvec <- max(toyota_d$Price)
+denormalize <- function(x,minval,maxval) {
+  x*(maxval-minval) + minval
+}
+actual <- t(as.data.frame(Map(denormalize,train_toyota$Price,minvec,maxvec)))
+pred <- t(as.data.frame(Map(denormalize,result$net.result,minvec,maxvec)))
+
 #error evaluation
 library(ModelMetrics)
-rmse(train_toyota$Price, result$net.result)
-data.frame(actual = train_toyota$Price, prediction = result$net.result)
+rmse(actual, pred)
+data.frame(actual = actual, prediction = pred)
 
 #Part B
 #for threshold values, 1, 0.1, 0.05, 0.01, 0.005, 0.001, and 0.0001 on prediction data
@@ -78,10 +84,4 @@ result <- compute(model, pred_toyota)
 
 #error evaluation
 library(ModelMetrics)
-<<<<<<< HEAD
-rmse(train_toyota$Price, result$net.result)
-data.frame(actual = train_toyota$Price, prediction = result$net.result)
-=======
-rmse(train_toyota$Price, result)
-rmse
->>>>>>> ef183bf3b74fd03b41f68bf977f722175c31d976
+rmse(val_toyota$Price, result$net.result)
