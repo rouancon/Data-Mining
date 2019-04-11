@@ -35,10 +35,10 @@ library(neuralnet)
 model <- neuralnet(
   formula = Price~Age_08_04+KM+Fuel_Type.1+Fuel_Type.2+Fuel_Type.3+HP+Automatic+Doors+Quarterly_Tax+Mfr_Guarantee+Guarantee_Period+Airco+Automatic_airco+CD_Player+Powered_Windows+Sport_Model+Tow_Bar, 
   train_toyota,
-  hidden = 1,
+  hidden = c(1,1),
   threshold = 0.005,
   stepmax = 1e+06, 
-  rep = 1, 
+  rep = 1,
   startweights = NULL,
   learningrate.limit = NULL,
   learningrate.factor = list(minus = 0.5, plus = 1.2),
@@ -92,4 +92,4 @@ pred <- t(as.data.frame(Map(denormalize,result$net.result,minvec,maxvec)))
 
 #error evaluation
 library(ModelMetrics)
-rmse(actual = actual, prediction = pred)
+rmse(actual, pred)
